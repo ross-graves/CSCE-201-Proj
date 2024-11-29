@@ -56,7 +56,7 @@ int main() {
         // Handle the user's choice
         getChoice(userChoice);
 
-    } while (userChoice != 3); // Repeat until the user chooses to exit
+    } while (userChoice != 4); // Repeat until the user chooses to exit
 
     return 0;
 }
