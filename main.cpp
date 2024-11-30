@@ -9,8 +9,10 @@ WORKOUT PROGRAM
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <map> //will need this for food database
 
 using namespace std;
+
 
 bool checkForExistingAcc(const string& name, const string& password, double& height, double& weight, double& age, char& gender, double& calories, string& goal) {
     ifstream accountFile("accounts.txt");
