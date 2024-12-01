@@ -25,7 +25,7 @@ map<string,double> foodDatabase = {
 };
 
 // ensures input is a number
-bool numberValidation(double& value, const string& prompt) {
+bool doubleValidation(double& value, const string& prompt) {
     while (!(cin >> value) || value <= 0.0) {
         cin.clear();
         cin.ignore(1000, '\n');
