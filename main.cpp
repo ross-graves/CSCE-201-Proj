@@ -13,6 +13,17 @@ WORKOUT PROGRAM
 
 using namespace std;
 
+//data base of foods, and calories per ounce
+map<string,double> foodDatabase = {
+    {"apple", 0.52},
+    {"banana", 0.9},
+    {"chicken", 1.65},
+    {"broccoli", 0.35},
+    {"rice", 1.3},
+    {"almonds", 7.0},
+//add more foods here
+};
+
 // ensures integer input
 bool integerValidation(int& value, const string& prompt) {
     while (!(cin >> value) || value <= 0) {
