@@ -98,10 +98,10 @@ void loginOrCreateAccount(string& name, string& password, double& height, double
             return;
         }
 
-        cout << "\nAccount not found. Please enter a new username and password to sign up for an account.\n";
-        cout << "Enter your name: ";
+        cout << "\nAccount not found! Sign up here:\n";
+        cout << "Create a username (no spaces): ";
         cin >> name;
-        cout << "Create a password: ";
+        cout << "Create a password (no spaces): ";
         cin >> password;
 
         height = weight = age = 0.0;
@@ -176,9 +176,18 @@ void getChoice(int choice, string& name, string& password, double& height, doubl
                      << " pounds\nAge: " << age << " years\nGender: " << ((gender == 'M') ? "Male" : "Female")
                      << "\nGoal: " << goal << "\nCalories: " << calories << " calories\n";
             } else if (profileChoice == 2) {
-                cout << "\nUpdate Profile:\nGender (M/F): ";
+                cout << "\nUpdate Profile: ";
+                do {
+                cout << "Gender (M/F): ";
                 cin >> gender;
+                cin.ignore(1000, '\n');
                 gender = toupper(gender);
+
+                if (gender != 'M' && gender != 'F') {
+                        cout << "Error! Input must be 'M' for male or 'F' for female: ";
+                        cin.clear();
+                    }
+                } while (gender != 'M' && gender != 'F');
 
                 cout << "Height (inches): ";
                 doubleValidation(height, "Error! Enter a valid height: ");
@@ -225,8 +234,15 @@ int main() {
     if (height == 0.0 || weight == 0.0 || age == 0.0 || gender == ' ') {
         cout << "\nAccount Created. Welcome!" << endl;
         cout << "\nLet's get your account personalized! Enter the following information:\nGender (M/F): ";
-        cin >> gender;
-        gender = toupper(gender);
+        do {
+            cin >> gender;
+            gender = toupper(gender);
+            if (gender != 'M' && gender != 'F') {
+                cout << "Error! Input must be 'M' for male or 'F' for female: ";
+                cin.clear();
+                cin.ignore(1000, '\n');
+            }
+        } while (gender != 'M' && gender != 'F');
 
         cout << "Height (inches): ";
         doubleValidation(height, "Error! Enter a valid height: ");
