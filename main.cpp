@@ -24,9 +24,9 @@ map<string,double> foodDatabase = {
 //add more foods here
 };
 
-// ensures integer input
-bool integerValidation(int& value, const string& prompt) {
-    while (!(cin >> value) || value <= 0) {
+// ensures input is a number
+bool numberValidation(double& value, const string& prompt) {
+    while (!(cin >> value) || value <= 0.0) {
         cin.clear();
         cin.ignore(1000, '\n');
         cout << prompt;
@@ -44,7 +44,7 @@ bool rangeValidation(int& value, const string& prompt, int min, int max) {
     return true;
 }
 
-bool checkForExistingAcc(const string& name, const string& password, int& height, int& weight, int& age, char& gender, int& calories, string& goal) {
+bool checkForExistingAcc(const string& name, const string& password, double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
     ifstream accountFile("accounts.txt");
     string line;
     while (getline(accountFile, line)) {
@@ -56,7 +56,7 @@ bool checkForExistingAcc(const string& name, const string& password, int& height
     return false;
 }
 
-void saveToFile(const string& name, const string& password, int height, int weight, int age, char gender, int calories, const string& goal) {
+void saveToFile(const string& name, const string& password, double height, double weight, double age, char gender, int calories, const string& goal) {
     ifstream accountFile("accounts.txt");
     ofstream tempFile("temp.txt");
     string line;
@@ -86,7 +86,7 @@ void saveToFile(const string& name, const string& password, int height, int weig
 }
 
 // function to login or create an account
-void loginOrCreateAccount(string& name, string& password, int& height, int& weight, int& age, char& gender, int& calories, string& goal) {
+void loginOrCreateAccount(string& name, string& password, double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
     while (true) {
         cout << "\nEnter your username: ";
         cin >> name;
@@ -104,7 +104,8 @@ void loginOrCreateAccount(string& name, string& password, int& height, int& weig
         cout << "Create a password: ";
         cin >> password;
 
-        height = weight = age = calories = 0;
+        height = weight = age = 0.0;
+        calories = 0;
         gender = ' ';
         goal = "None";
         return;
@@ -112,7 +113,7 @@ void loginOrCreateAccount(string& name, string& password, int& height, int& weig
 }
 
 // function to calculate daily calorie needs based on user input
-void calorieCalculator(int& height, int& weight, int& age, char& gender, int& calories, string& goal) {
+void calorieCalculator(double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
     // used the Mifflin-St Jeor Equation from BMR website
     double bmr = (gender == 'M')
         ? (66 + (6.23 * weight) + (12.7 * height) - (6.8 * age))
@@ -122,7 +123,7 @@ void calorieCalculator(int& height, int& weight, int& age, char& gender, int& ca
     cout << "\nSelect Physical activity level: " << endl;
     cout << "1. Not active at all \n2. Lightly Active \n3. Moderately Active \n4. Very active\n5. Super active\n";
     cout << "Enter choice: ";
-    rangeValidation(activityLevel, "Invalid input. Please enter a valid option (1-5): ", 1, 5);
+    rangeValidation(activityLevel, "Error! Please enter a valid option (1-5): ", 1, 5);
 
     double factors[] = {1.2, 1.375, 1.55, 1.725, 1.9};
     calories = bmr * ((activityLevel >= 1 && activityLevel <= 5) ? factors[activityLevel - 1] : 1.2);
@@ -130,7 +131,7 @@ void calorieCalculator(int& height, int& weight, int& age, char& gender, int& ca
     cout << "\nSet your goal:" << endl;
     cout << "1. Lose weight\n2. Gain weight\n3. Maintain weight\nEnter choice (1, 2, 3): ";
     int goalChoice;
-    rangeValidation(goalChoice, "Invalid input. Please enter a valid option (1, 2, 3): ", 1, 3);
+    rangeValidation(goalChoice, "Error! Please enter a valid option (1, 2, 3): ", 1, 3);
 
     int paceChoice = 0, calorieSubtraction = 0;
 
@@ -138,7 +139,7 @@ void calorieCalculator(int& height, int& weight, int& age, char& gender, int& ca
         cout << "\nChoose your pace:\n1. Fast (2 lbs/week)\n2. Moderate (1 lb/week)\n3. Slow (0.5 lb/week)" << endl;
         cout << "DISCLAIMER!!!!!!! Faster does not mean better. Consult your healthcare provider BEFORE any drastic measures." << endl;
         cout << "Enter choice (1, 2, 3): ";
-        rangeValidation(paceChoice, "Invalid input. Please enter a valid option (1, 2, 3): ", 1, 3);
+        rangeValidation(paceChoice, "Error! Please enter a valid option (1, 2, 3): ", 1, 3);
 
         calorieSubtraction = (paceChoice == 1) ? (goalChoice == 1 ? -1000 : 1000)
                   : (paceChoice == 2) ? (goalChoice == 1 ? -500 : 500)
@@ -163,12 +164,12 @@ void displayMenu() {
 }
 
 // handle the user's choice
-void getChoice(int choice, string& name, string& password, int& height, int& weight, int& age, char& gender, int& calories, string& goal) {
+void getChoice(int choice, string& name, string& password, double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
     switch (choice) {
         case 1: {
             cout << "\n1. View Profile\n2. Update Profile\nEnter choice: ";
             int profileChoice;
-            rangeValidation(profileChoice, "Invalid input. Please enter a valid option (1 or 2): ", 1, 2);
+            rangeValidation(profileChoice, "Error! Please enter a valid option (1 or 2): ", 1, 2);
 
             if (profileChoice == 1) {
                 cout << "\nName: " << name << "\nHeight: " << height << " inches\nWeight: " << weight
@@ -180,13 +181,13 @@ void getChoice(int choice, string& name, string& password, int& height, int& wei
                 gender = toupper(gender);
 
                 cout << "Height (inches): ";
-                integerValidation(height, "Invalid input. Enter a valid height: ");
+                doubleValidation(height, "Error! Enter a valid height: ");
 
                 cout << "Weight (pounds): ";
-                integerValidation(weight, "Invalid input. Enter a valid weight: ");
+                doubleValidation(weight, "Error! Enter a valid weight: ");
 
                 cout << "Age: ";
-                integerValidation(age, "Invalid input. Enter a valid age: ");
+                doubleValidation(age, "Error! Enter a valid age: ");
 
                 calorieCalculator(height, weight, age, gender, calories, goal);
                 saveToFile(name, password, height, weight, age, gender, calories, goal);
@@ -212,7 +213,8 @@ void getChoice(int choice, string& name, string& password, int& height, int& wei
 
 int main() {
     string name, password, goal = "None";
-    int height = 0, weight = 0, age = 0, calories = 0;
+    double height = 0.0, weight = 0.0, age = 0.0;
+    int calories = 0;
     char gender = ' ';
 
     cout << "\n*******************************" << endl;
@@ -220,20 +222,20 @@ int main() {
     cout << "*******************************" << endl;
     loginOrCreateAccount(name, password, height, weight, age, gender, calories, goal);
 
-    if (height == 0 || weight == 0 || age == 0 || gender == ' ') {
+    if (height == 0.0 || weight == 0.0 || age == 0.0 || gender == ' ') {
         cout << "\nAccount Created. Welcome!" << endl;
         cout << "\nLet's get your account personalized! Enter the following information:\nGender (M/F): ";
         cin >> gender;
         gender = toupper(gender);
 
         cout << "Height (inches): ";
-        integerValidation(height, "Invalid input. Enter a valid height: ");
+        doubleValidation(height, "Error! Enter a valid height: ");
 
         cout << "Weight (pounds): ";
-        integerValidation(weight, "Invalid input. Enter a valid weight: ");
+        doubleValidation(weight, "Error! Enter a valid weight: ");
 
         cout << "Age: ";
-        integerValidation(age, "Invalid input. Enter a valid age: ");
+        doubleValidation(age, "Error! Enter a valid age: ");
 
         calorieCalculator(height, weight, age, gender, calories, goal);
         saveToFile(name, password, height, weight, age, gender, calories, goal);
@@ -243,7 +245,7 @@ int main() {
     do {
         displayMenu();
         cout << "\nEnter your choice (1, 2, 3, 4): ";
-        rangeValidation(userChoice, "Invalid input. Please enter a valid option (1-4): ", 1, 4);
+        rangeValidation(userChoice, "Error! Please enter a valid option (1-4): ", 1, 4);
         getChoice(userChoice, name, password, height, weight, age, gender, calories, goal);
     } while (userChoice != 4);
 
