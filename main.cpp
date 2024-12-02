@@ -1,6 +1,6 @@
 /***************
 CSCE201 PROJECT
-Group: (idk if we have a number or a name or whatever)
+Group: Gym Brogrammers
 WORKOUT PROGRAM
 12/01/2024
 ****************/
