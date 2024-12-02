@@ -37,11 +37,11 @@ map<string, double> foodDatabase = {
     {"sprite", 11.9},
     {"coca cola", 11.6},
     {"coke", 11.6},
-    {"pepsi" 12.5},
+    {"pepsi", 12.5},
     {"dr pepper", 12.5},
     {"steak", 53.0},
     {"pork", 67.5},
-    {"carrot", 10.0}
+    {"carrot", 10.0},
     {"caesar salad", 140.0}
 
 };
@@ -198,7 +198,7 @@ void calorieCalculator(double& height, double& weight, double& age, char& gender
 
     int activityLevel;
     cout << "\nSelect Physical activity level: " << endl;
-    cout << "1. Not active at all \n2. Lightly Active \n3. Moderately Active \n4. Very active\n5. Super active\n";
+    cout << "1. Not active (Sedentary) \n2. Lightly Active (Light walking or jogging) \n3. Moderately Active (Exercise 1-2 times a week) \n4. Very active (Exercise 4-5 times a week) \n5. Super active (Excercise 6-7 times a week or Physical job) \n";
     cout << "Enter choice: ";
     rangeValidation(activityLevel, "Error! Please enter a valid option (1-5): ", 1, 5);
 
@@ -226,7 +226,7 @@ void calorieCalculator(double& height, double& weight, double& age, char& gender
     goal = (goalChoice == 1) ? "Lose weight" : (goalChoice == 2) ? "Gain weight" : "Maintain weight";
     calories += calorieSubtraction;
 
-    cout << "\nYour adjusted daily calorie goal is: " << calories << " calories.\n";
+    cout << "\nYour calorie intake based on your goal is: " << calories << " calories.\n";
 }
 
 // displays menu options
