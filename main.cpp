@@ -234,7 +234,7 @@ void displayMenu() {
     cout << "\n***********************************" << endl;
     cout << "*          MAIN MENU              *" << endl;
     cout << "* 1. Option 1 - Manage Profile    *" << endl;
-    cout << "* 2. Option 2 - Log Calories     *" << endl;
+    cout << "* 2. Option 2 - Log Calories      *" << endl;
     cout << "* 3. Option 3 - Workout Guide     *" << endl;
     cout << "* 4. Exit                         *" << endl;
     cout << "***********************************" << endl;
