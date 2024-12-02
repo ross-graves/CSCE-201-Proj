@@ -1,2 +1,4 @@
-Project for CSCE 201!
-A basic workout program.
+// Project for CSCE 201!
+// A program that helps users track their calories and workouts based on specific goals
+/* Purpose: As three individuals who go to the gym, we collectively recognized that tracking calories is one of the most important aspects of fitness. Whether it’s weight loss, muscle gain, or maintenance, calories are the most important factor determining if the body is in a deficit or surplus, which influences changes in body composition. With this realization, we aim to create a user-friendly and personalized calorie-tracking program that users can integrate into their daily routines. */
+/* How to run: Enter username and password. If you do not have an account, the app will prompt you to create one and ask you different questions about yourself to determine your caloric intake. Then, it will take you to the menu where you can enter the number that corresponds with the menu selection that you want (eg., enter 1 for profile management). This is the same for navigation throughout the entire app. */
