@@ -12,7 +12,7 @@ WORKOUT PROGRAM
 #include <map>
 
 using namespace std;
-
+//Food Database with calories per oz
 map<string, double> foodDatabase = {
     {"apple", 15.0},
     {"banana", 25.0},
@@ -43,7 +43,7 @@ map<string, double> foodDatabase = {
     {"carrot", 10.0},
     {"caesar salad", 140.0}
 };
-
+//allows user to add food if not in food database
 void addCustomFood() {
     string foodName;
     double caloriePerOz;
@@ -68,7 +68,7 @@ void addCustomFood() {
         cout << "Food not added to the database." << endl;
     }
 }
-
+//allows user to log food, and user addCustomfood if not in database
 void trackFood(int& totalCalories) {
     string foodName;
     double foodAmount;
@@ -97,7 +97,7 @@ void trackFood(int& totalCalories) {
 
     cout << "\nTotal calories tracked today: " << totalCalories << " calories.\n";
 }
-
+// ensures input is a number
 bool doubleValidation(double& value, const string& prompt) {
     while (!(cin >> value) || value <= 0.0) {
         cin.clear();
@@ -106,7 +106,7 @@ bool doubleValidation(double& value, const string& prompt) {
     }
     return true;
 }
-
+// ensures input is within range
 bool rangeValidation(int& value, const string& prompt, int min, int max) {
     while (!(cin >> value) || value < min || value > max) {
         cin.clear();
@@ -156,7 +156,7 @@ void saveToFile(const string& name, const string& password, double height, doubl
     remove("accounts.txt");
     rename("temp.txt", "accounts.txt");
 }
-
+// function to login or create an account
 void loginOrCreateAccount(string& name, string& password, double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
     while (true) {
         cout << "\nEnter your username: ";
@@ -183,7 +183,9 @@ void loginOrCreateAccount(string& name, string& password, double& height, double
     }
 }
 
+// function to calculate daily calorie needs based on user input
 void calorieCalculator(double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
+        // used the Mifflin-St Jeor Equation from BMR website
     double bmr = (gender == 'M')
         ? (66 + (6.23 * weight) + (12.7 * height) - (6.8 * age))
         : (655 + (4.35 * weight) + (4.7 * height) - (4.7 * age));
@@ -220,7 +222,7 @@ void calorieCalculator(double& height, double& weight, double& age, char& gender
 
     cout << "\nYour calorie intake based on your goal is: " << calories << " calories.\n";
 }
-
+// displays menu options
 void displayMenu() {
     cout << "\n***********************************" << endl;
     cout << "*          MAIN MENU              *" << endl;
@@ -290,7 +292,7 @@ void createWorkout() {
     cin.get();    // Wait for the user to press Enter
 }
 
-
+// handle the user's choice
 void getChoice(int choice, string& name, string& password, double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
     int totalCalories = 0;
     switch (choice) {
