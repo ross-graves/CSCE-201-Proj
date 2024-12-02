@@ -9,11 +9,10 @@ WORKOUT PROGRAM
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <map> // will need this for food database
+#include <map>
 
 using namespace std;
 
-//food database stored in calories per oz
 map<string, double> foodDatabase = {
     {"apple", 15.0},
     {"banana", 25.0},
@@ -43,9 +42,8 @@ map<string, double> foodDatabase = {
     {"pork", 67.5},
     {"carrot", 10.0},
     {"caesar salad", 140.0}
-
 };
-//function to allow user to add food if not in database
+
 void addCustomFood() {
     string foodName;
     double caloriePerOz;
@@ -57,7 +55,6 @@ void addCustomFood() {
     if (toupper(addFood) == 'Y') {
         cout << "Enter food name: ";
         cin >> foodName;
-        //search database
         if (foodDatabase.find(foodName) != foodDatabase.end()) {
             cout << "Food already in database." << endl;
             return;
@@ -71,7 +68,7 @@ void addCustomFood() {
         cout << "Food not added to the database." << endl;
     }
 }
-//prompts and calculates user food calories
+
 void trackFood(int& totalCalories) {
     string foodName;
     double foodAmount;
@@ -101,7 +98,6 @@ void trackFood(int& totalCalories) {
     cout << "\nTotal calories tracked today: " << totalCalories << " calories.\n";
 }
 
-// ensures input is a number
 bool doubleValidation(double& value, const string& prompt) {
     while (!(cin >> value) || value <= 0.0) {
         cin.clear();
@@ -111,7 +107,6 @@ bool doubleValidation(double& value, const string& prompt) {
     return true;
 }
 
-// ensures input is within range
 bool rangeValidation(int& value, const string& prompt, int min, int max) {
     while (!(cin >> value) || value < min || value > max) {
         cin.clear();
@@ -162,7 +157,6 @@ void saveToFile(const string& name, const string& password, double height, doubl
     rename("temp.txt", "accounts.txt");
 }
 
-// function to login or create an account
 void loginOrCreateAccount(string& name, string& password, double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
     while (true) {
         cout << "\nEnter your username: ";
@@ -189,21 +183,19 @@ void loginOrCreateAccount(string& name, string& password, double& height, double
     }
 }
 
-// function to calculate daily calorie needs based on user input
 void calorieCalculator(double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
-    // used the Mifflin-St Jeor Equation from BMR website
     double bmr = (gender == 'M')
         ? (66 + (6.23 * weight) + (12.7 * height) - (6.8 * age))
         : (655 + (4.35 * weight) + (4.7 * height) - (4.7 * age));
 
     int activityLevel;
     cout << "\nSelect Physical activity level: " << endl;
-    cout << "1. Not active (Sedentary) \n2. Lightly Active (Light walking or jogging) \n3. Moderately Active (Exercise 1-2 times a week) \n4. Very active (Exercise 4-5 times a week) \n5. Super active (Excercise 6-7 times a week or Physical job) \n";
+    cout << "1. Not active (Sedentary) \n2. Lightly Active (Light walking or jogging) \n3. Moderately Active (Exercise 1-2 times a week) \n4. Very active (Exercise 4-5 times a week) \n5. Super active (Exercise 6-7 times a week or Physical job) \n";
     cout << "Enter choice: ";
     rangeValidation(activityLevel, "Error! Please enter a valid option (1-5): ", 1, 5);
 
     double factors[] = {1.2, 1.375, 1.55, 1.725, 1.9};
-    calories = bmr * ((activityLevel >= 1 && activityLevel <= 5) ? factors[activityLevel - 1] : 1.2);
+    calories = bmr * factors[activityLevel - 1];
 
     cout << "\nSet your goal:" << endl;
     cout << "1. Lose weight\n2. Gain weight\n3. Maintain weight\nEnter choice (1, 2, 3): ";
@@ -229,7 +221,6 @@ void calorieCalculator(double& height, double& weight, double& age, char& gender
     cout << "\nYour calorie intake based on your goal is: " << calories << " calories.\n";
 }
 
-// displays menu options
 void displayMenu() {
     cout << "\n***********************************" << endl;
     cout << "*          MAIN MENU              *" << endl;
@@ -240,9 +231,64 @@ void displayMenu() {
     cout << "***********************************" << endl;
 }
 
-// handle the user's choice
+void createWorkout() {
+    string typeTraining;
+    int workoutPerWeek;
+
+    cout << "What type of training are you looking for? (Hypertrophy or Strength): ";
+    cin >> typeTraining;
+
+    while (typeTraining != "Hypertrophy" && typeTraining != "Strength") {
+        cout << "Invalid training type. Please select Hypertrophy or Strength: ";
+        cin >> typeTraining;
+    }
+
+    cout << "How many times a week do you plan on working out? (2-6): ";
+    rangeValidation(workoutPerWeek, "Invalid input. Please select between 2 and 6 days per week: ", 2, 6);
+
+    if (typeTraining == "Hypertrophy") {
+        cout << "\nHypertrophy selected. Suggested sets and reps: 3-5 x 8-12" << endl;
+    } else if (typeTraining == "Strength") {
+        cout << "\nStrength selected. Suggested sets and reps: 2-6 x 1-6" << endl;
+    }
+
+    if (workoutPerWeek == 3 || workoutPerWeek == 6) {
+        cout << "\nUsing Push/Pull/Legs split:" << endl;
+        cout << "Day 1: Push (Chest, Triceps)" << endl;
+        cout << "Day 2: Pull (Back, Biceps, Shoulders)" << endl;
+        cout << "Day 3: Legs (Quads, Hamstrings, Calves)" << endl;
+        if (workoutPerWeek == 6) {
+            cout << "Day 4: Push (Chest, Triceps)" << endl;
+            cout << "Day 5: Pull (Back, Biceps, Shoulders)" << endl;
+            cout << "Day 6: Legs (Quads, Hamstrings, Calves)" << endl;
+        }
+    } else if (workoutPerWeek == 2 || workoutPerWeek == 4) {
+        cout << "\nUsing Lower/Upper Body split:" << endl;
+        cout << "Day 1: Lower Body (Legs)" << endl;
+        cout << "Day 2: Upper Body (Chest, Back, Shoulders, Arms)" << endl;
+        if (workoutPerWeek == 4) {
+            cout << "Day 3: Lower Body (Legs)" << endl;
+            cout << "Day 4: Upper Body (Chest, Back, Shoulders, Arms)" << endl;
+        }
+    } else if (workoutPerWeek == 5) {
+        cout << "\nUsing Separated Body Parts split:" << endl;
+        cout << "Day 1: Chest" << endl;
+        cout << "Day 2: Back" << endl;
+        cout << "Day 3: Legs" << endl;
+        cout << "Day 4: Shoulders" << endl;
+        cout << "Day 5: Arms" << endl;
+    }
+
+    cout << "\nYour customized workout plan has been generated!\n";
+
+    cout << "\nPress Enter to return to the main menu...";
+    cin.ignore(); // Clear the input buffer
+    cin.get();    // Wait for the user to press Enter
+}
+
+
 void getChoice(int choice, string& name, string& password, double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
-    int totalCalories = 0; // Declare totalCalories here
+    int totalCalories = 0;
     switch (choice) {
         case 1: {
             cout << "\n1. View Profile\n2. Update Profile\nEnter choice: ";
@@ -285,10 +331,10 @@ void getChoice(int choice, string& name, string& password, double& height, doubl
             break;
         }
         case 2:
-            trackFood(totalCalories); // Pass totalCalories
+            trackFood(totalCalories);
             break;
         case 3:
-            cout << "\nYou selected Option 3." << endl;
+            createWorkout();
             break;
         case 4:
             cout << "\nExiting program..." << endl;
@@ -303,7 +349,6 @@ int main() {
     double height = 0.0, weight = 0.0, age = 0.0;
     int calories = 0;
     char gender = ' ';
-    int totalCalories = 0; // Declare totalCalories here
 
     cout << "\n*******************************" << endl;
     cout << "*   CALORIE CALCULATOR 3000   *" << endl;
@@ -344,5 +389,7 @@ int main() {
         getChoice(userChoice, name, password, height, weight, age, gender, calories, goal);
     } while (userChoice != 4);
 
+    return 0;
+}
     return 0;
 }
