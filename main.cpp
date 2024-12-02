@@ -15,12 +15,34 @@ using namespace std;
 
 
 map<string, double> foodDatabase = {
-    {"apple", 0.52},
-    {"banana", 0.9},
-    {"chicken", 1.65},
-    {"broccoli", 0.35},
-    {"rice", 1.3},
-    {"almonds", 7.0}
+    {"apple", 15.0},
+    {"banana", 25.0},
+    {"chicken", 31.0},
+    {"broccoli", 25.0},
+    {"rice", 37.0},
+    {"almonds", 164.0},
+    {"rice krispies", 130.0},
+    {"pepperoni pizza", 84.0},
+    {"cheese pizza", 78.0},
+    {"pizza", 81.0},
+    {"hamburger", 62.5},
+    {"cheeseburger", 89.0},
+    {"burger", 75.8},
+    {"fries", 58.0},
+    {"french fries", 58.0},
+    {"chocolate ice cream", 57.0},
+    {"vanilla ice cream", 57.0},
+    {"ice cream", 57.0},
+    {"red bull", 13.1},
+    {"sprite", 11.9},
+    {"coca cola", 11.6},
+    {"coke", 11.6},
+    {"pepsi" 12.5},
+    {"dr pepper", 12.5},
+    {"steak", 53.0},
+    {"pork", 67.5},
+    {"carrot", 10.0}
+
 };
 
 void addCustomFood() {
