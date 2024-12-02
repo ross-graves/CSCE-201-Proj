@@ -13,7 +13,7 @@ WORKOUT PROGRAM
 
 using namespace std;
 
-
+//food database stored in calories per oz
 map<string, double> foodDatabase = {
     {"apple", 15.0},
     {"banana", 25.0},
@@ -45,7 +45,7 @@ map<string, double> foodDatabase = {
     {"caesar salad", 140.0}
 
 };
-
+//function to allow user to add food if not in database
 void addCustomFood() {
     string foodName;
     double caloriePerOz;
@@ -57,7 +57,7 @@ void addCustomFood() {
     if (toupper(addFood) == 'Y') {
         cout << "Enter food name: ";
         cin >> foodName;
-
+        //search database
         if (foodDatabase.find(foodName) != foodDatabase.end()) {
             cout << "Food already in database." << endl;
             return;
@@ -71,7 +71,7 @@ void addCustomFood() {
         cout << "Food not added to the database." << endl;
     }
 }
-
+//prompts and calculates user food calories
 void trackFood(int& totalCalories) {
     string foodName;
     double foodAmount;
