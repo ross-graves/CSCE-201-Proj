@@ -42,6 +42,7 @@ map<string, double> foodDatabase = {
     {"steak", 53.0},
     {"pork", 67.5},
     {"carrot", 10.0}
+    {"caesar salad", 140.0}
 
 };
 
