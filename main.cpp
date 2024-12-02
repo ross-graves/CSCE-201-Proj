@@ -237,7 +237,8 @@ void createWorkout() {
 
     cout << "What type of training are you looking for? (Hypertrophy or Strength): ";
     cin >> typeTraining;
-
+    
+    //Input Validation
     while (typeTraining != "Hypertrophy" && typeTraining != "Strength") {
         cout << "Invalid training type. Please select Hypertrophy or Strength: ";
         cin >> typeTraining;
@@ -245,13 +246,15 @@ void createWorkout() {
 
     cout << "How many times a week do you plan on working out? (2-6): ";
     rangeValidation(workoutPerWeek, "Invalid input. Please select between 2 and 6 days per week: ", 2, 6);
-
+    
+    //Suggesting type of training based on user input
     if (typeTraining == "Hypertrophy") {
         cout << "\nHypertrophy selected. Suggested sets and reps: 3-5 x 8-12" << endl;
     } else if (typeTraining == "Strength") {
         cout << "\nStrength selected. Suggested sets and reps: 2-6 x 1-6" << endl;
     }
-
+    
+    //Suggesting type of workout split based on how many days user is willing to workout
     if (workoutPerWeek == 3 || workoutPerWeek == 6) {
         cout << "\nUsing Push/Pull/Legs split:" << endl;
         cout << "Day 1: Push (Chest, Triceps)" << endl;
@@ -281,6 +284,7 @@ void createWorkout() {
 
     cout << "\nYour customized workout plan has been generated!\n";
 
+    //Return back to main menu
     cout << "\nPress Enter to return to the main menu...";
     cin.ignore(); // Clear the input buffer
     cin.get();    // Wait for the user to press Enter
@@ -389,5 +393,7 @@ int main() {
         getChoice(userChoice, name, password, height, weight, age, gender, calories, goal);
     } while (userChoice != 4);
 
+    return 0;
+}
     return 0;
 }
