@@ -13,16 +13,70 @@ WORKOUT PROGRAM
 
 using namespace std;
 
-//data base of foods, and calories per ounce
-map<string,double> foodDatabase = {
+
+map<string, double> foodDatabase = {
     {"apple", 0.52},
     {"banana", 0.9},
     {"chicken", 1.65},
     {"broccoli", 0.35},
     {"rice", 1.3},
-    {"almonds", 7.0},
-//add more foods here
+    {"almonds", 7.0}
 };
+
+void addCustomFood() {
+    string foodName;
+    double caloriePerOz;
+    char addFood;
+
+    cout << "\nFood not found in database. Would you like to add it? (Y/N): ";
+    cin >> addFood;
+
+    if (toupper(addFood) == 'Y') {
+        cout << "Enter food name: ";
+        cin >> foodName;
+
+        if (foodDatabase.find(foodName) != foodDatabase.end()) {
+            cout << "Food already in database." << endl;
+            return;
+        }
+        cout << "Enter calories per oz for " << foodName << ": ";
+        cin >> caloriePerOz;
+
+        foodDatabase[foodName] = caloriePerOz;
+        cout << foodName << " has been added to the database with " << caloriePerOz << " calories/oz" << endl;
+    } else {
+        cout << "Food not added to the database." << endl;
+    }
+}
+
+void trackFood(int& totalCalories) {
+    string foodName;
+    double foodAmount;
+    char continueTracking;
+
+    do {
+        cout << "\nEnter food item: ";
+        cin >> foodName;
+
+        auto it = foodDatabase.find(foodName);
+        if (it != foodDatabase.end()) {
+            cout << "Enter the amount (ounces) you ate: ";
+            cin >> foodAmount;
+
+            double foodCalories = it->second * foodAmount;
+            totalCalories += foodCalories;
+            cout << "You ate " << foodCalories << " calories of " << foodName << "." << endl;
+        } else {
+            cout << "Food not included in database." << endl;
+            addCustomFood();
+        }
+        cout << "Add more food? (Y/N): ";
+        cin >> continueTracking;
+
+    } while (toupper(continueTracking) == 'Y');
+
+    cout << "\nTotal calories tracked today: " << totalCalories << " calories.\n";
+}
 
 // ensures input is a number
 bool doubleValidation(double& value, const string& prompt) {
@@ -157,7 +211,7 @@ void displayMenu() {
     cout << "\n***********************************" << endl;
     cout << "*          MAIN MENU              *" << endl;
     cout << "* 1. Option 1 - Manage Profile    *" << endl;
-    cout << "* 2. Option 2 - (INSERT HERE)     *" << endl;
+    cout << "* 2. Option 2 - Log Calories     *" << endl;
     cout << "* 3. Option 3 - (INSERT HERE)     *" << endl;
     cout << "* 4. Exit                         *" << endl;
     cout << "***********************************" << endl;
@@ -165,6 +219,7 @@ void displayMenu() {
 
 // handle the user's choice
 void getChoice(int choice, string& name, string& password, double& height, double& weight, double& age, char& gender, int& calories, string& goal) {
+    int totalCalories = 0; // Declare totalCalories here
     switch (choice) {
         case 1: {
             cout << "\n1. View Profile\n2. Update Profile\nEnter choice: ";
@@ -178,12 +233,12 @@ void getChoice(int choice, string& name, string& password, double& height, doubl
             } else if (profileChoice == 2) {
                 cout << "\nUpdate Profile: ";
                 do {
-                cout << "Gender (M/F): ";
-                cin >> gender;
-                cin.ignore(1000, '\n');
-                gender = toupper(gender);
+                    cout << "Gender (M/F): ";
+                    cin >> gender;
+                    cin.ignore(1000, '\n');
+                    gender = toupper(gender);
 
-                if (gender != 'M' && gender != 'F') {
+                    if (gender != 'M' && gender != 'F') {
                         cout << "Error! Input must be 'M' for male or 'F' for female: ";
                         cin.clear();
                     }
@@ -207,7 +262,7 @@ void getChoice(int choice, string& name, string& password, double& height, doubl
             break;
         }
         case 2:
-            cout << "\nYou selected Option 2." << endl;
+            trackFood(totalCalories); // Pass totalCalories
             break;
         case 3:
             cout << "\nYou selected Option 3." << endl;
@@ -225,6 +280,7 @@ int main() {
     double height = 0.0, weight = 0.0, age = 0.0;
     int calories = 0;
     char gender = ' ';
+    int totalCalories = 0; // Declare totalCalories here
 
     cout << "\n*******************************" << endl;
     cout << "*   CALORIE CALCULATOR 3000   *" << endl;
